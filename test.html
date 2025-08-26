@@ -1,19 +1,39 @@
-h1 CSS only clock of clocks
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>นาฬิกาแบบเรียลไทม์</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #111;
+      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 60px;
+    }
+    #clock {
+      text-shadow: 0 0 10px #0f0;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
 
-p Fun experiment inspired by 
-  a(href='https://goo.gl/49JZdd', target='_blank') this
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours().toString().padStart(2, '0');
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+      let seconds = now.getSeconds().toString().padStart(2, '0');
 
-input(type="checkbox", id="animation-trigger")
-label(for="animation-trigger", data-trigger-on="Start" data-trigger-off="Pause")
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
 
-div.clock
-  - types = ["--min-tens no--sec-tens", "--min-units", "--colon", "--sec-tens", "--sec-units"]
-
-   each item in types
-      div(class="no no" + item)
-        - for (var x = 0; x < 30; x++)
-          div
-
-
-// Initial call to display the time immediately
-updateClock();
+    setInterval(updateClock, 1000); // อัปเดตทุกวินาที
+    updateClock(); // แสดงเวลาทันทีเมื่อโหลด
+  </script>
+</body>
+</html>
