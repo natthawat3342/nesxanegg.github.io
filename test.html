@@ -1,39 +1,26 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>นาฬิกาแบบเรียลไทม์</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #111;
-      color: #0f0;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 60px;
-    }
-    #clock {
-      text-shadow: 0 0 10px #0f0;
-    }
-  </style>
-</head>
-<body>
-  <div id="clock">00:00:00</div>
+var dialLines = document.getElementsByClassName('diallines');
 
-  <script>
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours().toString().padStart(2, '0');
-      let minutes = now.getMinutes().toString().padStart(2, '0');
-      let seconds = now.getSeconds().toString().padStart(2, '0');
+for (var i = 1; i < 60; i++) {
+   dialLines[i] = $(dialLines[i-1]).clone()
+                                   .insertAfter($(dialLines[i-1]));
+   $(dialLines[i]).css('transform', 'rotate(' + 6 * i + 'deg)');
+}
 
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
+function tick() {
+   var date = new Date();
+   var seconds = date.getSeconds();
+   var minutes = date.getMinutes();
+   var hours = date.getHours();
+   var day = date.getDate();
+   
+   var secAngle = seconds * 6;
+   var minAngle = minutes * 6 + seconds * (360/3600);
+   var hourAngle = hours * 30 + minutes * (360/720);
+   
+   $('.sec-hand').css('transform', 'rotate(' + secAngle + 'deg)');
+   $('.min-hand').css('transform', 'rotate(' + minAngle + 'deg)');
+   $('.hour-hand').css('transform', 'rotate(' + hourAngle + 'deg)');
+   $('.date').text(day);
+}
 
-    setInterval(updateClock, 1000); // อัปเดตทุกวินาที
-    updateClock(); // แสดงเวลาทันทีเมื่อโหลด
-  </script>
-</body>
-</html>
+setInterval(tick, 100);
