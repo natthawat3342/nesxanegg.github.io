@@ -1,26 +1,31 @@
-var dialLines = document.getElementsByClassName('diallines');
+<!DOCTYPE html>
+<html>
 
-for (var i = 1; i < 60; i++) {
-   dialLines[i] = $(dialLines[i-1]).clone()
-                                   .insertAfter($(dialLines[i-1]));
-   $(dialLines[i]).css('transform', 'rotate(' + 6 * i + 'deg)');
+<body onload="startTime()">
+
+<h2>Nattawat Phimkham</h1>
+<h2>Ness - No.4</h2>
+ <h2>Surathampitak</h3>
+
+<div id="txt"></div>
+
+<script>
+function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
 }
 
-function tick() {
-   var date = new Date();
-   var seconds = date.getSeconds();
-   var minutes = date.getMinutes();
-   var hours = date.getHours();
-   var day = date.getDate();
-   
-   var secAngle = seconds * 6;
-   var minAngle = minutes * 6 + seconds * (360/3600);
-   var hourAngle = hours * 30 + minutes * (360/720);
-   
-   $('.sec-hand').css('transform', 'rotate(' + secAngle + 'deg)');
-   $('.min-hand').css('transform', 'rotate(' + minAngle + 'deg)');
-   $('.hour-hand').css('transform', 'rotate(' + hourAngle + 'deg)');
-   $('.date').text(day);
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
 }
+</script>
 
-setInterval(tick, 100);
+</body>
+</html>
